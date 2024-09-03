@@ -14,6 +14,7 @@ namespace App\Utils;
 
 use App\Constants\ErrCode;
 use Hyperf\Context\Context;
+use Hyperf\Contract\Arrayable;
 use Hyperf\Contract\PaginatorInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
@@ -21,7 +22,13 @@ use function App\Kernel\di;
 
 class ResponseUtil
 {
-    public static function result(ErrCode $code, ?string $message = null, ?array $data = null): PsrResponseInterface
+    /**
+     * @param ErrCode $code
+     * @param string|null $message
+     * @param Arrayable|array|null $data
+     * @return PsrResponseInterface
+     */
+    public static function result(ErrCode $code, ?string $message = null, Arrayable|array $data = null): PsrResponseInterface
     {
         $requestId = Context::get('requestId');
         $result = [
@@ -32,12 +39,12 @@ class ResponseUtil
             $result['requestId'] = $requestId;
         }
         if (! empty($data)) {
-            $result['data'] = $data;
+            $result['data'] = $data instanceof Arrayable ? $data->toArray() : $data;
         }
         return di(ResponseInterface::class)->json($result);
     }
 
-    public static function success(?array $data = null): PsrResponseInterface
+    public static function success(Arrayable|array $data = null): PsrResponseInterface
     {
         return static::result(ErrCode::SUCCESS, null, $data);
     }
