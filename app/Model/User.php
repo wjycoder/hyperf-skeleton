@@ -10,7 +10,7 @@ use function App\Kernel\di;
 /**
  * @property int $id
  */
-class User implements Authenticatable
+class User extends Model implements Authenticatable
 {
 
     public function getId()
@@ -22,6 +22,7 @@ class User implements Authenticatable
     {
         $res = di(UserCenterInterface::class)->getUserInfo((int)$key);
         $user = new static();
+        $user->toArray();
         $user->id = $res['id'];
         return $user;
     }
