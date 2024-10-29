@@ -26,4 +26,7 @@ enum ErrCode: int
 
     #[Message('internal error')]
     case SERVER_ERROR = 500;
+
+    #[Message('user not login')]
+    case USER_NOT_LOGIN = 4001;
 }
