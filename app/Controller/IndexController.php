@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\JsonRpc\UserCenter\Contracts\UserCenterInterface;
+use App\Model\Model;
 use App\Model\User;
 use App\Utils\ResponseUtil;
 use Hyperf\ApiDocs\Annotation\ApiOperation;
@@ -52,6 +53,7 @@ class IndexController extends AbstractController
     #[ApiOperation(summary: '获取用户信息', description: '获取用户信息', )]
     public function user(): ResponseInterface
     {
+        User::where('id', 1)->first();
         $id = $this->request->input('id');
         $user = $this->userCenter->getUserInfo((int)$id);
         return ResponseUtil::success($user);
