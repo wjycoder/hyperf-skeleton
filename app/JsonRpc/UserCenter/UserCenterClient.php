@@ -15,7 +15,6 @@ class UserCenterClient extends AbstractServiceClient implements UserCenterInterf
     protected string $serviceName = 'user-center';
     protected string $loadBalancer = 'random';
 
-    #[Cacheable(prefix: 'user-center', value: '#{id}', ttl: 3600)]
     public function getUserInfo(int $id): array
     {
         return $this->__request(__FUNCTION__, compact('id'));
