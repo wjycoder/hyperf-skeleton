@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\JsonRpc\UserCenter;
 
 use App\JsonRpc\UserCenter\Contracts\UserCenterInterface;
-use Hyperf\Cache\Annotation\Cacheable;
 use Hyperf\RpcClient\AbstractServiceClient;
 use Wjy\RpcHelper\RpcClient;
 
