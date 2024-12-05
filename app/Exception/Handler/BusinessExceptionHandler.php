@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace App\Exception\Handler;
 
 use App\Exception\BusinessException;
+use App\Kernel\Log\LogUtil;
 use Hyperf\ExceptionHandler\ExceptionHandler;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Swow\Psr7\Message\ResponsePlusInterface;
@@ -23,10 +24,12 @@ class BusinessExceptionHandler extends ExceptionHandler
     public function handle(Throwable $throwable, ResponsePlusInterface $response)
     {
         $this->stopPropagation();
-        return $response->withStatus(200)->withBody(new SwooleStream(json_encode([
+        $response = $response->withStatus(200)->withBody(new SwooleStream(json_encode([
             'code' => $throwable->getCode(),
             'message' => $throwable->getMessage(),
         ])));
+        LogUtil::logResponse($response);
+        return $response;
     }
 
     public function isValid(Throwable $throwable): bool

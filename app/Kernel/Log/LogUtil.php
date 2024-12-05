@@ -6,9 +6,10 @@ namespace App\Kernel\Log;
 use Hyperf\Codec\Json;
 use Hyperf\Context\Context;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\HttpServer\Contract\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 use Stringable;
 use function App\Kernel\console;
+use function App\Kernel\di;
 use function App\Kernel\logger;
 
 /**
@@ -29,18 +30,18 @@ class LogUtil
         console()->$name(...$arguments);
     }
 
-    public static function logResponse()
+    public static function logResponse(?Responseinterface $response = null)
     {
-        $request = Context::get(RequestInterface::class);
+        $request = di(RequestInterface::class);
         $requestId = Context::get('requestId');
-        $response = Context::get(ResponseInterface::class);
+        $response = $response?:di(\Hyperf\HttpServer\Contract\ResponseInterface::class);
         LogUtil::debug('request=' . Json::encode([
                 'request_id' => $requestId,
                 'uri' => $request->getUri()->getPath(),
                 'method' => $request->getMethod(),
                 'params' => $request->getParsedBody(),
                 'query' => $request->getQueryParams(),
+                'response' => $response->getBody()->getContents(),
             ], JSON_UNESCAPED_SLASHES));
-        LogUtil::debug('response=' . $response->getBody()->getContents());
     }
 }

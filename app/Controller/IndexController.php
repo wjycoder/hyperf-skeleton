@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Constants\ErrCode;
+use App\Exception\BusinessException;
 use App\JsonRpc\UserCenter\Contracts\UserCenterInterface;
 use App\Model\Model;
 use App\Model\User;
@@ -45,6 +47,7 @@ class IndexController extends AbstractController
         console()->emergency('emergency ----- Hello Hyperf!');
         console()->notice('notice ----- Hello Hyperf!');
         logger()->info('info ----- Hello Hyperf!');
+        throw new BusinessException(ErrCode::SERVER_ERROR);
         return ResponseUtil::success(['count' => 1]);
     }
 

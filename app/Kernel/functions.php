@@ -20,6 +20,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Throwable;
+use function Hyperf\Support\env;
 
 /**
  * @template T
@@ -39,8 +40,9 @@ function di(?string $serviceName = null)
     }
 }
 
-function logger($name = 'hyperf', $group = 'default'): LoggerInterface
+function logger($group = 'default'): LoggerInterface
 {
+    $name = env('APP_NAME', 'hyperf');
     return di(LoggerFactory::class)->get($name, $group);
 }
 

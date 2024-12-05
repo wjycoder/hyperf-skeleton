@@ -32,7 +32,7 @@ class AppExceptionHandler extends ExceptionHandler
         $this->logger->error(sprintf('%s[%s] in %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile()));
         $this->logger->error($throwable->getTraceAsString());
 
-        logger('error')->error(sprintf('%s[%s] in %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile()));
+        logger()->error(sprintf('%s[%s] in %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile()));
 
         return $response->withHeader('Server', 'hyperf')->withStatus(200)->withBody(new SwooleStream(ResponseUtil::fail(ErrCode::SERVER_ERROR)->getBody()->getContents()));
     }
