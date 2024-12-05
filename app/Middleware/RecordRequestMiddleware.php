@@ -44,14 +44,15 @@ class RecordRequestMiddleware implements MiddlewareInterface
         // $res['requestId'] = $requestId;
         // $response = $response->withBody(new Stream(Json::encode($res)));
 
-        LogUtil::debug(Json::encode([
-                'request_id' => $requestId,
-                'uri' => $request->getUri()->getPath(),
-                'method' => $request->getMethod(),
-                'params' => $request->getParsedBody(),
-                'query' => $request->getQueryParams(),
-                'response' => $response->getBody()->getContents(),
-            ], JSON_UNESCAPED_SLASHES));
+        // LogUtil::info(Json::encode([
+        //         'request_id' => $requestId,
+        //         'uri' => $request->getUri()->getPath(),
+        //         'method' => $request->getMethod(),
+        //         'params' => $request->getParsedBody(),
+        //         'query' => $request->getQueryParams(),
+        //         'response' => $response->getBody()->getContents(),
+        //     ], JSON_UNESCAPED_SLASHES));
+        LogUtil::logResponse($response);
         return $response;
     }
 }

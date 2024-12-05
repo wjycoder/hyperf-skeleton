@@ -47,7 +47,7 @@ class IndexController extends AbstractController
         console()->emergency('emergency ----- Hello Hyperf!');
         console()->notice('notice ----- Hello Hyperf!');
         logger()->info('info ----- Hello Hyperf!');
-        throw new BusinessException(ErrCode::SERVER_ERROR);
+        // throw new BusinessException(ErrCode::SERVER_ERROR);
         return ResponseUtil::success(['count' => 1]);
     }
 
