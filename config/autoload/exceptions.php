@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 use App\Exception\Handler\AppExceptionHandler;
+use App\Exception\Handler\AuthExceptionHandler;
 use App\Exception\Handler\BusinessExceptionHandler;
 use Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler;
 
@@ -25,6 +26,7 @@ return [
     'handler' => [
         'http' => [
             HttpExceptionHandler::class,
+            AuthExceptionHandler::class,
             BusinessExceptionHandler::class,
             AppExceptionHandler::class,
         ],

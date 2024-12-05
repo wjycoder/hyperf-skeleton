@@ -45,7 +45,7 @@ return [
             'class' => RotatingFileHandler::class,
             'constructor' => [
                 'filename' => BASE_PATH . '/runtime/logs/log.log',
-                'level' => Level::Info,
+                'level' => Level::Debug,
             ],
         ],
         'formatter' => [

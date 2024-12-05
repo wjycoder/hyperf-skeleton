@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\Kernel\Log\LogUtil;
 use Hyperf\Codec\Json;
 use Hyperf\Context\Context;
 use Hyperf\Engine\Http\Stream;
@@ -23,7 +24,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use function App\Kernel\console;
 
-class RequestMiddleware implements MiddlewareInterface
+class RecordRequestMiddleware implements MiddlewareInterface
 {
     public function __construct(protected ContainerInterface $container)
     {
@@ -43,14 +44,14 @@ class RequestMiddleware implements MiddlewareInterface
         // $res['requestId'] = $requestId;
         // $response = $response->withBody(new Stream(Json::encode($res)));
 
-        console()->debug('request=' . Json::encode([
+        LogUtil::debug(Json::encode([
                 'request_id' => $requestId,
                 'uri' => $request->getUri()->getPath(),
                 'method' => $request->getMethod(),
                 'params' => $request->getParsedBody(),
                 'query' => $request->getQueryParams(),
+                'response' => $response->getBody()->getContents(),
             ], JSON_UNESCAPED_SLASHES));
-        console()->debug('response=' . $response->getBody()->getContents());
         return $response;
     }
 }
